@@ -4,12 +4,29 @@
 // @author ongaeshi
 // @date   2011/02/26
 
-var TIME_ARRAY = [10, 20, 30, 40, 50];
+var TIME_ARRAY = [8, 14, 35, 2, 50];
 
 // ロードイベント
 addEvent(window, "load", function() {
   MovieLib.setTime(0);
+  update_playlist();
 });
+
+function update_playlist() {
+  var playlist = document.getElementById("d_playlist");
+
+  var html = "";
+  html += "<ul>\n";
+
+  for( var i = 0; i < TIME_ARRAY.length; i++ ) {
+    var time = TIME_ARRAY[i];
+    html += "<li><button onclick=\"" + "MovieLib.setTime(" + time + ")\">" + time + "</button>";
+  }
+
+  html += "</ul>\n";
+
+  playlist.innerHTML = html;
+}
 
 // 記録ボタンをクリック
 function record_button_click() {
