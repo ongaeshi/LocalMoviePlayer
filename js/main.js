@@ -4,33 +4,32 @@
 // @author ongaeshi
 // @date   2011/02/26
 
-var TIME_ARRAY = [8, 14, 35, 2, 50];
+var TIME_ARRAY = [];
 
 // ロードイベント
 addEvent(window, "load", function() {
-  MovieLib.setTime(0);
   update_playlist();
 });
 
+// プレイリストの更新
 function update_playlist() {
-  var playlist = document.getElementById("d_playlist");
-
-  var html = "";
-  html += "<ul>\n";
+  $("#d_playlist_ul li").remove();
 
   for( var i = 0; i < TIME_ARRAY.length; i++ ) {
     var time = TIME_ARRAY[i];
-    html += "<li><button onclick=\"" + "MovieLib.setTime(" + time + ")\">" + time + "</button>";
+    $("#d_playlist_ul").append("<li><button onclick=\"" + "MovieLib.setTime(" + time + ")\">" + time + "</button>");
   }
-
-  html += "</ul>\n";
-
-  playlist.innerHTML = html;
 }
 
-// 記録ボタンをクリック
+// 記録ボタン
 function record_button_click() {
   var time = MovieLib.getTime();
-  //alert(time);
-  MovieLib.setTime(time + 10);
+  TIME_ARRAY.push(time);
+  update_playlist();
+}
+
+// クリアボタン
+function clear_button_click() {
+  TIME_ARRAY = [];
+  update_playlist();
 }
