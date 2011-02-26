@@ -4,26 +4,73 @@
 // @author ongaeshi
 // @date   2011/02/26
 
-// time  : ŠÔ
-// image : base64‰»‚³‚ê‚½ƒf[ƒ^
+// time  : æ™‚é–“
+// image : base64åŒ–ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿
 var gStorage = [
   {time:10, thumbnail:""},
   {time:20, thumbnail:""},
   {time:30, thumbnail:""}
 ];
 
-// ƒ[ƒhƒCƒxƒ“ƒg
+// ãƒ­ãƒ¼ãƒ‰ã‚¤ãƒ™ãƒ³ãƒˆ
 addEvent(window, "load", function() {
-  // ƒf[ƒ^‚Ìƒ[ƒh
+  // ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰
   var data = LocalStorage.load();
   if (data)
     gStorage = data;
 
-  // ƒf[ƒ^‚ÌƒZ[ƒu
+  // ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒ¼ãƒ–
   update_playlist();
 });
 
-// ƒvƒŒƒCƒŠƒXƒg‚ÌXV
+// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚³ãƒ”ãƒ¼
+function copyFrame(id) {
+  var cEle = document.getElementById( id ); 
+  var cCtx = cEle.getContext("2d");
+  var vEle = document.getElementById("myVideo" );
+
+  cEle.width = 200 //vEle.videoWidth; 
+  cEle.height = 200 //vEle.videoHeight; 
+
+  cCtx.drawImage(vEle, 0 , 0 ) ; 
+
+  var img_jpeg_src = cEle.toDataURL("image/jpeg");
+  return img_jpeg_src;
+}
+
+// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ­ãƒ¼ãƒ‰
+function loadFrame(index, t) {
+  //alert("load");
+  var cEle = document.getElementById( "canvasload" + t) ; 
+  var cCtx = cEle.getContext("2d");
+
+  //imgè¦ç´ ã®ç”Ÿæˆ
+  Img = new Image();
+  //Base64åŒ–ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’imgè¦ç´ ã«ã‚»ãƒƒãƒˆã™ã‚‹
+  Img.src = gStorage[index].thumbnail;
+  //alert(Img.src);
+
+  //RotateCanvasã«Imgè¦ç´ ã‚’è²¼ã‚Šä»˜ã‘ã‚‹ 
+  cCtx.drawImage(Img, 0, 0); 
+}
+
+// è¨˜éŒ²ãƒœã‚¿ãƒ³
+function record_button_click() {
+  var time = MovieLib.getTime();
+  var data = copyFrame("canvasssample0");
+  gStorage.push({time:time, thumbnail:data});
+  LocalStorage.save(gStorage);
+  update_playlist();
+}
+
+// ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
+function clear_button_click() {
+  gStorage = [];
+  LocalStorage.save(gStorage);
+  update_playlist();
+}
+
+// ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆã®æ›´æ–°
 function update_playlist() {
   $("#comments article").remove();
 
@@ -31,23 +78,15 @@ function update_playlist() {
     var time = gStorage[i].time;
     $("#comments").append("<article><header>" +
                           "<a href=\"#\">capture</a> on <time datetime=\"\" onclick=\"MovieLib.setTime(" + time + ")\">" + time + "</time>" +
+        	          "<canvas id=\"canvasload" + i + "\" width=\"100\" hight=\"100\"></canvas>" +
                           "</header>" +
                           "<p>comment.</p>" +
                           "</article>");
   }
+
+  for( var i = 0; i < gStorage.length; i++ ) {
+    copyFrame("canvasload" + i);
+    loadFrame(i, i);
+  }
 }
 
-// ‹L˜^ƒ{ƒ^ƒ“
-function record_button_click() {
-  var time = MovieLib.getTime();
-  gStorage.push({time:time});
-  LocalStorage.save(gStorage);
-  update_playlist();
-}
-
-// ƒNƒŠƒAƒ{ƒ^ƒ“
-function clear_button_click() {
-  gStorage = [];
-  LocalStorage.save(gStorage);
-  update_playlist();
-}
