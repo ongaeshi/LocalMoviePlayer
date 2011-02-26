@@ -25,11 +25,15 @@ addEvent(window, "load", function() {
 
 // プレイリストの更新
 function update_playlist() {
-  $("#d_playlist_ul li").remove();
+  $("#comments article").remove();
 
   for( var i = 0; i < gStorage.length; i++ ) {
     var time = gStorage[i].time;
-    $("#d_playlist_ul").append("<li><button onclick=\"" + "MovieLib.setTime(" + time + ")\">" + time + "</button>");
+    $("#comments").append("<article><header>" +
+                          "<a href=\"#\">capture</a> on <time datetime=\"\" onclick=\"MovieLib.setTime(" + time + ")\">" + time + "</time>" +
+                          "</header>" +
+                          "<p>comment.</p>" +
+                          "</article>");
   }
 }
 

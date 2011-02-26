@@ -4,7 +4,6 @@
 <title>The Flower Blog</title>
 <link rel="stylesheet" href="index2/master.css" type="text/css" media="screen">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-<script type="text/javascript" src="js/telopper.js"></script>
 <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="js/MyLib.js"></script>
 <script type="text/javascript" src="js/MovieLib.js"></script>
@@ -19,25 +18,16 @@
 
 <section>
 <div id="viewArea">
-			<video id="myVideo">
-				<source src="movie/kiso.mov">
-				<source src="movie/kiso.ogv">
-				<p>HTML5のvideoに対応したブラウザをご利用下さい</p>
-			</video>
-			<div id="telop"></div>
-		</div>
-		
-		<div>
-		<input type="button" id="playButton" onclick="playVideo()" value="再生">
-		<span id="playTime">0</span>
-		</div>
-		
-		<form>
-			<div class="subheader">テロップデータ</div>
-			<textarea id="telopCommand" cols="30" rows="15"></textarea>
-		</form>
+  <video id="myVideo" width="640"  height="360" src="http://www.youtube.com/demo/google_main.mp4"  controls autobuffer>
+    <p> Try this page in Safari  4! Or you can <a  href="http://www.youtube.com/demo/google_main.mp4">download the  video</a> instead.</p>
+  </video>
 </div>
 </section>
+
+<div id="d_button">
+  <button onclick="record_button_click()">記録!!</button>
+  <button onclick="clear_button_click()">クリア</button>
+</div>
 
 <div id="content">
 	<section id="comments">
