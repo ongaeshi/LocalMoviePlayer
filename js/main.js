@@ -4,7 +4,13 @@
 // @author ongaeshi
 // @date   2011/02/26
 
-var TIME_ARRAY = [];
+// time  : 時間
+// image : base64化されたデータ
+var gStorage = [
+  {time:10, thumbnail:""},
+  {time:20, thumbnail:""},
+  {time:30, thumbnail:""}
+];
 
 // ロードイベント
 addEvent(window, "load", function() {
@@ -15,8 +21,8 @@ addEvent(window, "load", function() {
 function update_playlist() {
   $("#d_playlist_ul li").remove();
 
-  for( var i = 0; i < TIME_ARRAY.length; i++ ) {
-    var time = TIME_ARRAY[i];
+  for( var i = 0; i < gStorage.length; i++ ) {
+    var time = gStorage[i].time;
     $("#d_playlist_ul").append("<li><button onclick=\"" + "MovieLib.setTime(" + time + ")\">" + time + "</button>");
   }
 }
@@ -24,12 +30,12 @@ function update_playlist() {
 // 記録ボタン
 function record_button_click() {
   var time = MovieLib.getTime();
-  TIME_ARRAY.push(time);
+  gStorage.push({time:time});
   update_playlist();
 }
 
 // クリアボタン
 function clear_button_click() {
-  TIME_ARRAY = [];
+  gStorage = [];
   update_playlist();
 }
