@@ -58,7 +58,8 @@ function loadFrame(index, t) {
 function record_button_click() {
   var time = MovieLib.getTime();
   var data = copyFrame("canvasssample0");
-  gStorage.push({time:time, thumbnail:data});
+  //gStorage.push({time:time, thumbnail:data});
+  gStorage.unshift({time:time, thumbnail:data});
   LocalStorage.save(gStorage);
   update_playlist();
 }
