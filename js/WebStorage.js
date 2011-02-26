@@ -10,6 +10,7 @@ var WebStorage = (function() {
   }
   
   function save(object) {
+    v = window.localStorage.getItem(name);
     JSON.stringify()
   }
 
