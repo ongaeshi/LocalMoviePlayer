@@ -14,6 +14,12 @@ var gStorage = [
 
 // ロードイベント
 addEvent(window, "load", function() {
+  // データのロード
+  var data = LocalStorage.load();
+  if (data)
+    gStorage = data;
+
+  // データのセーブ
   update_playlist();
 });
 
@@ -31,11 +37,13 @@ function update_playlist() {
 function record_button_click() {
   var time = MovieLib.getTime();
   gStorage.push({time:time});
+  LocalStorage.save(gStorage);
   update_playlist();
 }
 
 // クリアボタン
 function clear_button_click() {
   gStorage = [];
+  LocalStorage.save(gStorage);
   update_playlist();
 }
