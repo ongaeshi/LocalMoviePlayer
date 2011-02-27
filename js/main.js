@@ -46,10 +46,10 @@ function update_playlist() {
   for( var i = 0; i < gStorage.length; i++ ) {
     var time = gStorage[i].time;
     $("#comments").append("<article><header>" +
-                          "<a href=\"#\">capture</a> on <time datetime=\"\" onclick=\"MovieLib.setTime(" + time + ")\">" + time + "</time>" +
+                          "<a href=\"#\" onclick=\"MovieLib.setTime(" + time + ")\">capture on <time datetime=\"\">" + time +"</time></a>" +
         	          "<canvas id=\"canvasload" + i + "\" width=\"" + THUMB_SIZE.width + "\" height=\"" + THUMB_SIZE.height + "\"></canvas>" +
-                          "</header>" +
                           "<p>comment.</p>" +
+                          "</header>" +
                           "</article>");
   }
 

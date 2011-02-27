@@ -360,3 +360,10 @@ footer {
 		footer ul li a {
 			display: block;
 		}
+
+/*------------------------------
+=button
+------------------------------*/
+#capture_button {
+    font-size:18px;
+}
