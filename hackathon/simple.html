@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"></meta>
+<script type="text/javascript">
+  var video;
+  function init() {
+    video = document.getElementById("video1");
+    video.addEventListener("ended", function() {
+      alert("終了しました");
+    }, true);
+  }
+  function play() {
+    video.play();
+  }
+  function pause() {
+    video.pause();
+  }
+  function fastforward() {
+    video.playbackRate += .2;
+  }
+
+  var array;
+
+  function copyFrame(t) {
+
+	var cEle = document.getElementById( "canvasssample" + t) ; 
+	var cCtx = cEle.getContext("2d");
+	var vEle = document.getElementById("video1" );
+
+	cEle.width = 200 //vEle.videoWidth; 
+	cEle.height = 200 //vEle.videoHeight; 
+
+	cCtx.drawImage(vEle, 0 , 0 ) ; 
+
+	var img_jpeg_src = cEle.toDataURL("image/jpeg");
+
+/*
+	 //ローカルストレージに文字列を保存する
+	 window.localStorage.ImageData64 = Base64Coded;
+
+	 //ローカルストレージからデータを読み込む
+	 GetlocalStorageData = localStorage.ImageData64;
+	 //ローカルストレージからデータを削除する
+//	 window.localStorage.removeItem("ImageData64");
+
+	 //img要素の生成
+	 Img = new Image();
+	 //Base64化されたデータをimg要素にセットする
+	 Img.src = GetlocalStorageData;
+
+	 //RotateCanvasにImg要素を貼り付ける 
+	 RotateCtx.drawImage(Img, 0, 0); 
+*/
+
+  }
+
+
+</script>
+</head>
+<body onload="init()">
+  <video id="video1" controls width="400">
+  <source src="http://upload.wikimedia.org/wikipedia/commons/a/a5/20090124_WeeklyAddress.ogv" type="video/ogg">
+  </video><br/>
+  <button onclick="play()">再生</button>
+  <button onclick="pause()">一時停止</button>
+  <button onclick="fastforward()">早送り</button>
+
+<br>
+  <button onclick="copyFrame(1)">画像を記録</button>
+  <canvas id="canvasssample1" width="200" hight="200"></canvas>
+
+  <button onclick="copyFrame(2)">画像を記録</button>
+  <canvas id="canvasssample2" width="200" hight="200"></canvas>
+
+  <button onclick="copyFrame(3)">画像を記録</button>
+  <canvas id="canvasssample3" width="200" hight="200"></canvas>
+
+</body>
+</html>
