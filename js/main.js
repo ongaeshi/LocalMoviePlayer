@@ -4,12 +4,12 @@
 // @author ongaeshi
 // @date   2011/02/26
 
+var THUMB_SIZE = {width:500, height:300};
+
 // time  : 時間
 // image : base64化されたデータ
 var gStorage = [
-  {time:10, thumbnail:""},
-  {time:20, thumbnail:""},
-  {time:30, thumbnail:""}
+  {time:0, thumbnail:""},
 ];
 
 // ロードイベント
@@ -29,8 +29,8 @@ function copyFrame(id) {
   var cCtx = cEle.getContext("2d");
   var vEle = document.getElementById("myVideo" );
 
-  cEle.width = 400 //vEle.videoWidth; 
-  cEle.height = 200 //vEle.videoHeight; 
+  cEle.width = THUMB_SIZE.width; //vEle.videoWidth; 
+  cEle.height = THUMB_SIZE.height; //vEle.videoHeight; 
 
   cCtx.drawImage(vEle, 0 , 0 ) ; 
 
@@ -39,36 +39,32 @@ function copyFrame(id) {
 }
 
 // フレームロード
-function loadFrame(index, t) {
-  //alert("load");
-  var cEle = document.getElementById( "canvasload" + t) ; 
-  var cCtx = cEle.getContext("2d");
+function loadFrame(canvas_id, img_src) {
+  var canvas = document.getElementById(canvas_id);
+  var ctx = canvas.getContext("2d");
 
-  //img要素の生成
-  Img = new Image();
-  //Base64化されたデータをimg要素にセットする
-  Img.src = gStorage[index].thumbnail;
-  //alert(Img.src);
+  var img = new Image();
+  img.src = img_src;
 
-  //RotateCanvasにImg要素を貼り付ける 
-  cCtx.drawImage(Img, 0, 0); 
+  img.onload = function() {
+    ctx.drawImage(img, 0, 0);
+  }
 }
 
 // 記録ボタン
 function record_button_click() {
   var time = MovieLib.getTime();
-  var data = copyFrame("canvasssample0");
-  //gStorage.push({time:time, thumbnail:data});
-  gStorage.unshift({time:time, thumbnail:data});
-  LocalStorage.save(gStorage);
+  gStorage.unshift({time:time, thumbnail:""});
   update_playlist();
+  gStorage[0].thumbnail = copyFrame("canvasload0");
+  LocalStorage.save(gStorage);
 }
 
 // クリアボタン
 function clear_button_click() {
   gStorage = [];
-  LocalStorage.save(gStorage);
   update_playlist();
+  LocalStorage.save(gStorage);
 }
 
 // プレイリストの更新
@@ -79,15 +75,14 @@ function update_playlist() {
     var time = gStorage[i].time;
     $("#comments").append("<article><header>" +
                           "<a href=\"#\">capture</a> on <time datetime=\"\" onclick=\"MovieLib.setTime(" + time + ")\">" + time + "</time>" +
-        	          "<canvas id=\"canvasload" + i + "\" width=\"100\" hight=\"100\"></canvas>" +
+        	          "<canvas id=\"canvasload" + i + "\" width=\"" + THUMB_SIZE.width + "\" height=\"" + THUMB_SIZE.height + "\"></canvas>" +
                           "</header>" +
                           "<p>comment.</p>" +
                           "</article>");
   }
 
-  for( var i = 0; i < gStorage.length; i++ ) {
-    copyFrame("canvasload" + i);
-    loadFrame(i, i);
+  for ( var i = 0; i < gStorage.length; i++ ) {
+    loadFrame("canvasload" + i, gStorage[i].thumbnail);
   }
 }
 
