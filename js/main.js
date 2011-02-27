@@ -29,7 +29,7 @@ function copyFrame(id) {
   var cCtx = cEle.getContext("2d");
   var vEle = document.getElementById("myVideo" );
 
-  cEle.width = 200 //vEle.videoWidth; 
+  cEle.width = 400 //vEle.videoWidth; 
   cEle.height = 200 //vEle.videoHeight; 
 
   cCtx.drawImage(vEle, 0 , 0 ) ; 
