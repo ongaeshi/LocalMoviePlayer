@@ -4,7 +4,7 @@
 // @author ongaeshi
 // @date   2011/02/26
 
-var THUMB_SIZE = {width:500, height:300};
+var THUMB_SIZE = {width:355, height:200};
 
 // time  : 時間
 // image : base64化されたデータ
@@ -25,16 +25,16 @@ addEvent(window, "load", function() {
 
 // フレームコピー
 function copyFrame(id) {
-  var cEle = document.getElementById( id ); 
-  var cCtx = cEle.getContext("2d");
-  var vEle = document.getElementById("myVideo" );
+  var canvas = document.getElementById(id); 
+  var ctx = canvas.getContext("2d");
+  var vEle = document.getElementById("myVideo");
 
-  cEle.width = THUMB_SIZE.width; //vEle.videoWidth; 
-  cEle.height = THUMB_SIZE.height; //vEle.videoHeight; 
+  canvas.width = THUMB_SIZE.width; //vEle.videoWidth; 
+  canvas.height = THUMB_SIZE.height; //vEle.videoHeight; 
 
-  cCtx.drawImage(vEle, 0 , 0 ) ; 
+  ctx.drawImage(vEle, 0, 0, canvas.width, canvas.height); 
 
-  var img_jpeg_src = cEle.toDataURL("image/jpeg");
+  var img_jpeg_src = canvas.toDataURL("image/jpeg");
   return img_jpeg_src;
 }
 
