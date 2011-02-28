@@ -19,7 +19,10 @@
 
     <section>
       <div id="viewArea">
-        <video id="myVideo" width="640" height="360" src="./movie/google_main.mp4" controls autobuffer> 
+        <video id="myVideo" width="640" height="360" controls>
+          <source src="./movie/nc29626_short.webm" type='video/webm; codecs="vp8, vorbis"' />
+          <source src="./movie/nc29626_short.ogv" type='video/ogg; codecs="theora, vorbis"' />
+          <source src="./movie/nc29626_short.mp4" type="video/mp4" />
           <p>HTML5のvideoに対応したブラウザをご利用下さい</p>
         </video>
       </div>
@@ -60,9 +63,5 @@
         </section>
       </div>
     </footer>
-
-    <div>
-      <canvas id="canvasssample0" width="100" hight="100" hidden="hidden"></canvas>
-    </div>
 
 </body></html>
